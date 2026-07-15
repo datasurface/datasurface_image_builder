@@ -1,0 +1,9 @@
+.env
+*.token
+gitlab-token.txt
+__pycache__/
+*.py[cod]
+wheelhouse/*.whl
+!wheelhouse/.gitkeep
+java-artifacts/*.jar
+!java-artifacts/.gitkeep
