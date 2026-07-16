@@ -7,3 +7,5 @@ __pycache__/
 *.py[cod]
 README.md
 BASE_IMAGE_CONTRACT.md
+LICENSE
+NOTICE

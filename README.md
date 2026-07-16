@@ -17,6 +17,26 @@ mounted only in the relevant BuildKit steps and is not stored in the image.
 Third-party components remain governed by their own licenses; DataSurface does
 not include or license those components as part of its wheel or thin jars.
 
+## Licensing
+
+Except where otherwise noted, the source code and documentation committed to
+this repository are licensed under the [Apache License 2.0](LICENSE). See
+[NOTICE](NOTICE) for attribution information.
+
+Apache-2.0 applies only to the contents of this repository. It does not apply to
+or relicense artifacts obtained during the image build:
+
+- DataSurface Python wheels and Java jars remain proprietary software governed
+  by the applicable DataSurface commercial agreement and package license;
+- third-party Python and Java dependencies remain governed by their respective
+  licenses; and
+- customer model source remains customer-owned and is not part of this
+  repository or image build context.
+
+A package reference, Maven coordinate, URL, or download step does not place the
+referenced artifact under Apache-2.0. Use of DataSurface packages requires the
+rights granted by the applicable DataSurface commercial agreement.
+
 ## Build and load locally
 
 The default `python:3.12` base is a working reference for Python workloads. Set
