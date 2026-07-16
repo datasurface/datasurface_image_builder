@@ -120,14 +120,17 @@ RUN --mount=type=bind,from=local-wheels,source=/wheelhouse,target=/tmp/local-whe
             echo "BuildKit secret gitlab_package_token is required" >&2; \
             exit 1; \
         fi; \
-        token="$(cat /run/secrets/gitlab_package_token)"; \
         package_version="${DATASURFACE_VERSION#v}"; \
-        python -m pip download \
+        netrc="$(mktemp)"; \
+        printf 'machine gitlab.com\n  login __token__\n  password %s\n' \
+            "$(cat /run/secrets/gitlab_package_token)" > "${netrc}"; \
+        NETRC="${netrc}" python -m pip download \
             --dest /tmp/datasurface-wheelhouse \
             --no-deps \
             --only-binary=:all: \
-            --index-url "https://__token__:${token}@gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/packages/pypi/simple" \
+            --index-url "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/packages/pypi/simple" \
             "datasurface==${package_version}"; \
+        rm -f "${netrc}"; \
     fi; \
     wheel="$(find /tmp/datasurface-wheelhouse -maxdepth 1 -type f -name 'datasurface-*.whl' -print -quit)"; \
     if [ -z "${wheel}" ]; then \
