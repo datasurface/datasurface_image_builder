@@ -45,6 +45,9 @@ SOURCE_ONLY_PREFIXES = (
 )
 
 SOURCE_ONLY_FILES = {
+    # Spark closures and Snowpark submission require these modules as source.
+    "platforms/spark/bulk_worker.py",
+    "platforms/spark/pyspark_runtime.py",
     "md/db/snowflake.py",
     "md/db/sqlserver.py",
     "md/db/trino.py",
