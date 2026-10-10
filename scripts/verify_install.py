@@ -55,6 +55,8 @@ SOURCE_ONLY_FILES = {
     "platforms/yellow/trigger_service.py",
     "platforms/yellow/yellow_events.py",
     "platforms/yellow/yellow_states.py",
+    # Canonical stdlib-only rules emitted into standalone Airflow DAGs.
+    "platforms/yellow/templates/jinja/airflow3X/standalone_contracts.py",
 }
 
 
