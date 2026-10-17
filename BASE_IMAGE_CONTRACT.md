@@ -33,3 +33,11 @@ wheels. They require separately published `musllinux` wheels.
 The image build creates an empty `/workspace/model`. Customer model source is
 obtained from the customer's separate model repository at runtime and is never
 copied into this image.
+
+## Runtime user
+
+The final image ends with `USER 1000:1000` (override with the `RUNTIME_UID` and `RUNTIME_GID`
+build args) and sets `HOME=/home/datasurface`, owned by that user. Generated DataSurface pods run
+as `runAsUser: 1000`, `runAsGroup: 1000`. The base image must therefore give a non-root user a
+writable `/tmp` and must not need root at runtime. It does not need a passwd entry for uid 1000.
+See the DataSurface image contract (`docs/ImageContract.md`) for the full requirements.
