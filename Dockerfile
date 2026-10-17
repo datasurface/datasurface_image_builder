@@ -153,4 +153,16 @@ RUN mkdir -p /workspace/model \
 
 WORKDIR /workspace/model
 
+# Non-root by default (DataSurface 1.40.3). Generated pods run as 1000:1000, the owner of the
+# cache PVCs after the cache-permissions migration. Numeric ids work even when the base image
+# has no matching passwd entry, so no useradd is required in the customer base.
+ARG RUNTIME_UID=1000
+ARG RUNTIME_GID=1000
+RUN mkdir -p /home/datasurface \
+    && chown -R "${RUNTIME_UID}:${RUNTIME_GID}" /home/datasurface /workspace
+ENV HOME=/home/datasurface
+USER ${RUNTIME_UID}:${RUNTIME_GID}
+RUN set -eu; test "$(id -u)" = "${RUNTIME_UID}"; touch "$HOME/.ds-write-test" /tmp/.ds-write-test; \
+    rm -f "$HOME/.ds-write-test" /tmp/.ds-write-test; python -c "import datasurface"
+
 CMD ["python", "-c", "import datasurface; print('DataSurface compiled runtime ready')"]
